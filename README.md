@@ -33,7 +33,7 @@
 
  ```sh
   gem install rails
-  rails new blog
+  rails new vote
   ```
 
 ## 3. Chạy project trên
