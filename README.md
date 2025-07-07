@@ -3,7 +3,7 @@
   <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--jvDLhx0b--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/cpcr5w0kgl6j94tss7n9.png" alt="rails logo" width=400">
   <br>
     <br>
-  TÌM HIỂU RUBY VÀ RUBY ON RAILS
+  TÌM HIỂU RUBY VÀ RUBY ON RAILS 
   <br><br>
 </h1>
 
