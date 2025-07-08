@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ArticleDetailTest < ActiveSupport::TestCase
+class PollViewTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

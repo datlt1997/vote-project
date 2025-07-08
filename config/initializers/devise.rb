@@ -14,7 +14,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '96f8700be45a48d00df9343f3603a1a9780354446af1a88f9fe858b438f774b014ec57b1155d524cc715b31275e038d630c62798785bc094739881ee641c15c6'
+  # config.secret_key = 'ec9f534ee758b0d40944110a3d4b85d6959531736f4287ff688852f299e4143a86314b230ccbb01274e7af8125961a0c388c65917373a72229f75e29b39cb612'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -126,7 +126,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 12
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = 'e6cfeb61f0e60bedbfcfbf7429f7c4dc28f37ed2a27ca0ed302d96ee71cbc04cafeef5bf99e81c84c9eaa2d49824067405d01c89ef622fd3583a9f6d7544a40a'
+  # config.pepper = '3133ffc9c3e5343e59f8cc3a336ea56a5fd29bfb8191aaac2df20769aa7d403ec5d03d6755b5253da29339161f13f98dffc02e2ba8b3b23acdef9db1575766de'
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false
@@ -244,7 +244,7 @@ Devise.setup do |config|
   # Turn scoped views on. Before rendering "sessions/new", it will first check for
   # "users/sessions/new". It's turned off by default because it's slower if you
   # are using only default views.
-  config.scoped_views = true
+  # config.scoped_views = false
 
   # Configure the default scope given to Warden. By default it's the first
   # devise role declared in your routes (usually :user).
@@ -255,7 +255,7 @@ Devise.setup do |config|
   # config.sign_out_all_scopes = true
 
   # ==> Navigation configuration
-  # Lists the formats that should be treated as navigational. Formats likes
+  # Lists the formats that should be treated as navigational. Formats like
   # :html should redirect to the sign in page when the user does not have
   # access, but formats like :xml or :json, should return 401.
   #
