@@ -43,6 +43,8 @@
   docker compose up -d
   docker exec -it ruby_vote bash
   bundle install
+  apt update
+  apt install libvips libvips-dev
   rails db:migrate
   rails db:seed
   ```

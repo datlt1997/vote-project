@@ -2,3 +2,4 @@
 /tmp
 /log/development.log
 .idea
+/storage/*/*

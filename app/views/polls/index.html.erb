@@ -1,0 +1,29 @@
+<div class="d-flex flex-row-reverse">
+  <%= link_to "Create", new_poll_path(), class: "p-1 btn btn-primary" %>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @polls.each do |poll| %>
+        <tr>
+            <th scope="row"><%= poll.id %></th>
+            <td><%= poll.title %></td>
+            <td><%= poll.description %></td>
+            <td class="d-flex gap-2">
+              <%= link_to "Edit", edit_poll_path(poll), class: "btn btn-primary" %>
+              <%= button_to "Delete", poll_path(poll), method: :delete,
+                    data: { turbo_confirm: "Are you sure?" },
+                    class: "btn btn-danger" %>
+            </td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>

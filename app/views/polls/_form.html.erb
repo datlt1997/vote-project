@@ -1,0 +1,66 @@
+<% if @poll.errors.any? %>
+  <div class="alert alert-danger">
+    <h4>Có lỗi xảy ra:</h4>
+    <ul>
+      <% @poll.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+<%= form_with(model: @poll, local: true, html: { multipart: true }) do |form| %>
+  <div class="mb-3 form-group">
+    <%= form.label :title, class: 'form-label' %>
+    <%= form.text_field :title, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3 form-group">
+    <%= form.label :description, class: 'form-label' %>
+    <%= form.text_area :description, size: '50x10', class: 'form-control' %>
+  </div>
+
+  <div class="mb-3 form-check">
+    <%= form.label :allows_multiple, class: 'form-check-label' %>
+    <%= form.check_box :allows_multiple, class: 'form-check-input' %>
+  </div>
+
+  <div class="mb-3 form-check">
+    <%= form.label :anonymous, class: 'form-check-label' %>
+    <%= form.check_box :anonymous, class: 'form-check-input' %>
+  </div>
+
+    <% if @poll.persisted? && @poll.image.attached? %>
+        <%= image_tag @poll.image.variant(resize_to_limit: [300, 300]) %>
+    <% end %>
+
+  <div class="mb-3 form-group">
+    <%= form.label :image, class: 'form-label' %>
+    <%= form.file_field :image, class: 'form-control' %>
+  </div>
+
+  <h5>Options</h5>
+
+  <div id="options">
+    <%= form.fields_for :options do |option_form| %>
+      <div class="nested-fields mb-2">
+        <%= option_form.hidden_field :_destroy %>
+        <div class="input-group">
+          <%= option_form.text_field :content, class: 'form-control', placeholder: 'Option content' %>
+          <div class="input-group-append">
+            <button class="btn btn-danger remove_fields" type="button">Delete</button>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <button type="button" class="btn btn-success" id="add-option-btn">Add option</button>
+
+  <br><br>
+
+  <%= form.submit actionText, class: 'btn btn-primary' %>
+<% end %>
+
+<%= javascript_include_tag "packs/polls", defer: true %>
