@@ -1,5 +1,5 @@
 class PollsController < ApplicationController
-  before_action :set_poll, only: %i[ edit update ]
+  before_action :set_poll, only: %i[ edit update destroy ]
 
   def index
     @polls = Poll.includes(:options).all
@@ -34,6 +34,15 @@ class PollsController < ApplicationController
       redirect_to polls_path, notice: "Success."
     else
       render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @poll.destroy!
+
+    respond_to do |format|
+      format.html { redirect_to polls_path, notice: "Success." }
+      format.json { head :no_content }
     end
   end
 
