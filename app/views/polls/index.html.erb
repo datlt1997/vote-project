@@ -1,29 +1,64 @@
-<div class="d-flex flex-row-reverse">
-  <%= link_to "Create", new_poll_path(), class: "p-1 btn btn-primary" %>
-</div>
+<div class='card'>
+  <div class='card-header'>
+    <h4>List</h4>
+  </div>
+  <div class="card-body">
+    <div class="row justify-content-end mb-2">
+      <div class="col-md-6">
+        <%= form_with url: polls_path, method: :get, class: "d-flex" do |form| %>
+          <div class="input-group">
+            <%= form.text_field :title, value: params[:title], class: 'form-control shadow-none', placeholder: 'Search', aria: { label: 'Search' } %>
+            <button class="btn btn-primary px-4" type="submit">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        <% end %>
+      </div>
+    </div>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Title</th>
-      <th scope="col">Description</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @polls.each do |poll| %>
-        <tr>
-            <th scope="row"><%= poll.id %></th>
-            <td><%= poll.title %></td>
-            <td><%= poll.description %></td>
-            <td class="d-flex gap-2">
-              <%= link_to "Edit", edit_poll_path(poll), class: "btn btn-primary" %>
-              <%= button_to "Delete", poll_path(poll), method: :delete,
-                    data: { turbo_confirm: "Are you sure?" },
-                    class: "btn btn-danger" %>
-            </td>
-        </tr>
-    <% end %>
-  </tbody>
-</table>
+    <div class="d-flex flex-row-reverse">
+      <%= link_to "Create", new_poll_path(), class: "p-1 btn btn-primary" %>
+    </div>
+
+    <div class='table-responsive'>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Image</th>
+            <th scope="col">Options</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @polls.each do |poll| %>
+            <tr>
+              <th scope="row"><%= poll.id %></th>
+              <td><%= poll.title %></td>
+              <td class='text-truncate' style="max-width: 150px;"><%= poll.description %></td>
+              <td>
+                <% if poll.persisted? && poll.image.attached? %>
+                  <%= image_tag poll.image.variant(resize_to_limit: [100, 100]) %>
+                <% end %>
+              </td>
+              <td><%= poll.options.count %></td>
+              <td>
+                <div class="d-flex flex-wrap gap-2">
+                  <%= link_to edit_poll_path(poll), class: "btn btn-primary btn-sm" do %>
+                    <%= icon('fa', 'pen')%>
+                  <% end %>
+
+                  <%= button_to poll_path(poll), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" do %>
+                    <%= icon('fa', 'trash')%>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

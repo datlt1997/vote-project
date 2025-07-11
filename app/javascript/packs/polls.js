@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="input-group">
             <input type="text" name="poll[options_attributes][new_options][content]" class="form-control" placeholder="Option content">
             <div class="input-group-append">
-              <button class="btn btn-danger remove_fields" type="button">Delete</button>
+              <button class="btn position-absolute end-0 remove_fields" type="button"><i class="fa fa-trash"></i></button>
             </div>
           </div>
         </div>

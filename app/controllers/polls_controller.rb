@@ -2,7 +2,10 @@ class PollsController < ApplicationController
   before_action :set_poll, only: %i[ edit update ]
 
   def index
-    @polls = Poll.all 
+    @polls = Poll.includes(:options).all
+      .yield_self do |relation|
+        params[:title].present? ? relation.where("title LIKE ?", "%#{params[:title]}%") : relation
+      end
   end
 
   def new
@@ -16,7 +19,7 @@ class PollsController < ApplicationController
 
     respond_to do |format|
       if @poll.save
-        format.html { redirect_to polls_path, notice: "Tạo người dùng thành công." }
+        format.html { redirect_to polls_path, notice: "Success." }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -28,7 +31,7 @@ class PollsController < ApplicationController
 
   def update
     if @poll.update(poll_params)
-      redirect_to polls_path, notice: "Cập nhật thành công."
+      redirect_to polls_path, notice: "Success."
     else
       render :edit, status: :unprocessable_entity
     end
