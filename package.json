@@ -1,0 +1,17 @@
+{
+  "name": "vote-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/datlt1997/vote-project.git"
+  },
+  "private": true,
+  "devDependencies": {
+    "@hotwired/turbo-rails": "^8.0.16"
+  }
+}

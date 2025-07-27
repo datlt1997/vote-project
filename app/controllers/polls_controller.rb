@@ -1,4 +1,4 @@
-class PollsController < ApplicationController
+class PollsController < AdminController
   before_action :set_poll, only: %i[ edit update destroy ]
 
   def index
