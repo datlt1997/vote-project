@@ -24,6 +24,9 @@ gem "turbo-rails"
 
 gem "bootstrap"
 
+# Paginate [https://github.com/kaminari/kaminari]
+gem 'kaminari'
+
 gem "sassc-rails"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]

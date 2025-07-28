@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('turbo:load', () => {
   const addButton = document.getElementById('add-option-btn');
   const optionsContainer = document.getElementById('options');
 
@@ -21,20 +21,20 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.addEventListener('click', (e) => {
-    if (e.target?.classList.contains("remove_fields")) {
+    if (e.target?.closest('.remove_fields')) {
       e.preventDefault();
 
-      const fieldWrapper = e.target.closest(".nested-fields");
-      
-      // Tìm hidden field _destroy
-      const destroyField = fieldWrapper.querySelector('input[name*="_destroy"]');
-      
+      const fieldWrapper = e.target.closest('.nested-fields');
+      const destroyField = fieldWrapper.querySelector(
+        'input[name*="_destroy"]'
+      );
+
       if (destroyField) {
-        destroyField.value = "1";
+        destroyField.value = '1';
       }
 
       if (window.location.pathname.includes('edit')) {
-        fieldWrapper.style.display = "none";
+        fieldWrapper.style.display = 'none';
       } else {
         fieldWrapper.remove();
       }
