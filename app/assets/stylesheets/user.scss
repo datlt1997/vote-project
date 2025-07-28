@@ -1,0 +1,16 @@
+.csv-wrapper {
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 10px 0;
+    gap: 10px;
+    justify-content: flex-end;
+    border-radius: 5px;
+}
+
+.csv-wrapper form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
