@@ -1,11 +1,16 @@
 class PollsController < AdminController
   before_action :set_poll, only: %i[ edit update destroy ]
 
+  DEFAULT_PAGE_SIZE = 5
+
   def index
-    @polls = Poll.includes(:options).all
+    @polls = Poll
       .yield_self do |relation|
         params[:title].present? ? relation.where("title LIKE ?", "%#{params[:title]}%") : relation
       end
+      .page(params[:page])
+      .per(DEFAULT_PAGE_SIZE)
+      .includes(:options)
   end
 
   def new

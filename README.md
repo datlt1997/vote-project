@@ -43,6 +43,7 @@
   docker compose up -d
   docker exec -it ruby_vote bash
   bundle install
+  rails assets:clobber
   rails assets:precompile
   apt update
   apt install libvips libvips-dev
