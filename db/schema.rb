@@ -80,7 +80,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_08_080747) do
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "role"
+    t.integer "role", default: 0
     t.string "user_name", null: false
     t.string "avatar"
     t.datetime "created_at", null: false

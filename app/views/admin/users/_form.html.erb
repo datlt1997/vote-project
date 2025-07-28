@@ -1,0 +1,59 @@
+<div class='card'>
+  <div class='card-header'>
+    <h4><%= actionText %></h4>
+  </div>
+  <div class='card-body'>
+    <% if @user.errors.any? %>
+      <div class="alert alert-danger">
+        <h4>Errors:</h4>
+        <ul>
+          <% @user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_with(model: @user, url: user.new_record? ? admin_users_path : admin_user_path(user), local: true, html: { multipart: true }) do |form| %>
+      <div class="mb-3 form-group">
+        <%= form.label :email, class: 'form-label' %>
+        <%= form.text_field :email, class: 'form-control' %>
+      </div>
+
+      <div class="mb-3 form-group">
+        <%= form.label :user_name, class: 'form-label' %>
+        <%= form.text_field :user_name, class: 'form-control' %>
+      </div>
+
+      <div class="mb-3 form-group">
+        <%= form.label :password, class: 'form-label' %>
+        <%= form.password_field :password, class: 'form-control' %>
+      </div>
+
+      <div class="mb-3 form-group">
+        <%= form.label :avatar, class: 'form-label' %>
+
+        <% if @user.persisted? && @user.avatar.attached? %>
+          <div class="mb-2">
+          <%= image_tag(user.avatar, size: "100x70") if user.avatar.present? %>
+          </div>
+        <% end %>
+
+        <%= form.file_field :avatar, class: 'form-control d-none', id: 'avatar-file' %>
+
+        <button type="button" class="btn btn-secondary d-block" id="upload-avatar-btn">
+          Tải ảnh
+        </button>
+
+      </div>
+
+      
+
+      <div class='text-center'>
+        <%= form.submit actionText, class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= javascript_include_tag "packs/user", defer: true %>

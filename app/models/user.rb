@@ -16,4 +16,7 @@ class User < ApplicationRecord
   def set_default_username
     self.user_name = self.email if user_name.blank?
   end
+  enum role: { user: 0, admin: 1 }
+  scope :normal_users, -> { where(role: 0) }
+  has_one_attached :avatar
 end
