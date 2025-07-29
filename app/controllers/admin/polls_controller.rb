@@ -1,6 +1,6 @@
 module Admin
   class PollsController < BaseController
-    before_action :set_poll, only: %i[ edit update destroy ]
+    before_action :set_poll, only: %i[ edit update destroy analytic ]
 
     DEFAULT_PAGE_SIZE = 5
 
@@ -52,6 +52,32 @@ module Admin
       end
     end
 
+    def analytic
+      @poll = Poll.includes(options: :votes).find(params[:id])
+      #tính tổng số vote
+      total_votes = @poll.options.sum { |option| option.votes.size }
+      #them properties vào poll
+      @total = total_votes
+      @statistics = @poll.options.map do |option|
+        vote_count = option.votes.size
+        percent = total_votes > 0 ? ((vote_count.to_f / total_votes) * 100).round(2) : 0
+        {
+          option: option.content,
+          votes_count: vote_count,
+          percent: percent,
+        }
+      end
+      if (params[:option_id].present?)
+        option = Option.includes(votes: :user).find(params[:option_id])
+        @voted_users = format_vote_data(option)
+      else
+        @voted_users = @poll.options.flat_map do |option|
+          format_vote_data(option)
+        end.uniq
+      end
+
+    end
+
     private
 
     def set_poll
@@ -73,6 +99,17 @@ module Admin
       end
 
       permitted
+    end
+
+    def format_vote_data(option)
+      option.votes.map do |vote|
+        {
+          id: vote.user.id,
+          user_name: vote.user.user_name,
+          option_content: option.content,
+          voted_at: vote.created_at
+        }
+      end
     end
   end
 end

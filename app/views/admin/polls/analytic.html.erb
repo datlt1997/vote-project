@@ -1,0 +1,54 @@
+<div class='card'>
+  <div class='card-header'>
+    <h4>Thống Kê:  <span><%= @poll.title %></span></h4>
+  </div>
+  <div class="card-body">
+    <h5>Có tất cả <%= @total %> bình chọn</h5>
+    <hr>
+    <% @statistics.each do |stat| %>
+      <div class="mb-2">
+        <h6><%= stat[:option] %> (<%= stat[:votes_count] %>)</h6>
+        <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar" style="width: <%= stat[:percent] %>%"></div>
+        </div>
+      </div>
+    <% end %>
+    <hr>
+    <h5>Chi tiết</h5>
+    <div class='table-responsive'>
+      <div class="row justify-content-end mb-2">
+        <div class="d-flex justify-content-end">
+          <%= form_with url: analytic_admin_poll_path(@poll), method: :get, class: "d-flex" do |form| %>
+            <div class="input-group">
+              <%= form.select :option_id, @poll.options.map { |opt| [opt.content, opt.id] }, { selected: params[:option_id], prompt: 'Search' }, class: 'form-control shadow-none form-select', aria: { label: 'Search' } %>
+              <button class="btn btn-primary px-4" type="submit">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Username</th>
+          <th scope="col">Bình Chọn</th>
+          <th scope="col">Bình Chọn Lúc</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @voted_users.each do |user| %>
+          <tr>
+            <th scope="row"><%= user[:id] %></th>
+            <td><%= user[:user_name] %></td>
+            <td><%= user[:option_content] %></td>
+            <td><%= user[:voted_at] %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
