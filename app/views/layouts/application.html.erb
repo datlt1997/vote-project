@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%= yield(:title) %></title>
+    <title>Vote Project - <%= yield(:title) %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -18,11 +18,25 @@
       <div class="page">
         <%= render 'layouts/navbar'%>
         <div class="page-body container">
+        <% if notice %>
+          <div class="alert alert-success">
+            <%= notice %>
+          </div>
+        <% end %>
+
+        <% if alert %>
+          <div class="alert alert-danger">
+            <%= alert %>
+            
+          </div>
+        <% end %>
           <div class="row">
-            <div class="sidebar col-3">
-              <%= render 'layouts/sidebar' %>
-            </div>
-            <div class='col-9'>
+            <% if current_user.admin? %>
+              <div class="sidebar col-3">
+                <%= render 'layouts/sidebar' %>
+              </div>
+            <% end %>
+            <div class="<%= current_user.admin? ? 'col-9' : 'col-12' %>">
               <div class="container body-content">
                 <%= yield %>
               </div>
