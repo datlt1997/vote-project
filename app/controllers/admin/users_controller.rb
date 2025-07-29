@@ -1,15 +1,15 @@
 require 'csv'
 
 module Admin
-  class UsersController < ApplicationController
+  class UsersController < BaseController
     before_action :set_user, only: %i[ edit update destroy ]
     def index
-      @users = User.where(role: 0).page(params[:page]).per(2)
+      @users = User.normal_users.page(params[:page]).per(5)
 
       respond_to do |format|
         format.html
         format.csv do
-          users = User.where(role: 0)
+          users = User.normal_users
           send_data generate_csv(users), filename: "users-#{Date.today}.csv"
         end
       end
