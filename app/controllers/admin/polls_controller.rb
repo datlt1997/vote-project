@@ -1,5 +1,5 @@
 module Admin
-  class PollsController < AdminController
+  class PollsController < BaseController
     before_action :set_poll, only: %i[ edit update destroy ]
 
     DEFAULT_PAGE_SIZE = 5
