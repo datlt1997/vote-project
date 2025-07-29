@@ -20,7 +20,7 @@
         <div class="d-flex justify-content-end">
           <%= form_with url: analytic_admin_poll_path(@poll), method: :get, class: "d-flex" do |form| %>
             <div class="input-group">
-              <%= form.select :option_id, @poll.options.map { |opt| [opt.content, opt.id] }, { selected: params[:option_id], prompt: 'Search' }, class: 'form-control shadow-none form-select', aria: { label: 'Search' } %>
+              <%= form.select :option_id, [['Tất cả', '']] + @poll.options.map { |opt| [opt.content, opt.id] }, { selected: params[:option_id], prompt: 'Search' }, class: 'form-control shadow-none form-select', aria: { label: 'Search' } %>
               <button class="btn btn-primary px-4" type="submit">
                 <i class="fa fa-search"></i>
               </button>
