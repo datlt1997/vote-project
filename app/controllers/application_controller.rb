@@ -18,7 +18,6 @@ class ApplicationController < ActionController::Base
         elsif resource.user?
             stored_location_for(resource) || home_path
         else
-            Rails.logger.debug "123"
             home_path
         end
     end
