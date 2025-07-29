@@ -7,6 +7,7 @@ class Poll < ApplicationRecord
 
   belongs_to :user
 
+  has_many :votes, dependent: :destroy
   has_many :options, inverse_of: :poll, dependent: :destroy
   accepts_nested_attributes_for :options, allow_destroy: true, reject_if: :all_blank
 end

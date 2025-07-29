@@ -16,7 +16,18 @@
     
     <main>
       <div class="page">
-        <div class="page-body container">
+        <div class="page-body container mt-5">
+          <% if notice %>
+            <div class="alert alert-success">
+              <%= notice %>
+            </div>
+          <% end %>
+
+          <% if alert %>
+            <div class="alert alert-danger">
+              <%= alert %>
+            </div>
+          <% end %>
           <%= yield %>
         </div>
       </div>

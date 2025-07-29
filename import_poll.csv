@@ -1,0 +1,7 @@
+poll_id,title,description,expires_at,allows_multiple,anonymous,user_id,image,poll_created_at,poll_updated_at,option_id,option_content,option_created_at,option_updated_at
+1,"Best Pizza","Vote for your favorite pizza","2025-08-01 23:59:59",false,true,3,"pizza.png","2025-07-15 10:00:00","2025-07-15 10:00:00",1,"Margherita","2025-07-15 10:05:00","2025-07-15 10:05:00"
+1,"Best Pizza","Vote for your favorite pizza","2025-08-01 23:59:59",false,true,3,"pizza.png","2025-07-15 10:00:00","2025-07-15 10:00:00",2,"Pepperoni","2025-07-15 10:06:00","2025-07-15 10:06:00"
+2,"Favorite Color","","",true,false,5,"","2025-07-16 09:30:00","2025-07-16 09:30:00",3,"Red","2025-07-16 09:35:00","2025-07-16 09:35:00"
+2,"Favorite Color","","",true,false,5,"","2025-07-16 09:30:00","2025-07-16 09:30:00",4,"Blue","2025-07-16 09:36:00","2025-07-16 09:36:00"
+3,"Summer Plans","What will you do this summer?","2025-09-01 00:00:00",false,false,2,"summer.jpg","2025-07-17 14:20:00","2025-07-17 14:20:00",5,"Go to the beach","2025-07-17 14:25:00","2025-07-17 14:25:00"
+3,"Summer Plans","What will you do this summer?","2025-09-01 00:00:00",false,false,2,"summer.jpg","2025-07-17 14:20:00","2025-07-17 14:20:00",6,"Stay home","2025-07-17 14:26:00","2025-07-17 14:26:00"

@@ -9,11 +9,16 @@ Rails.application.routes.draw do
         post :import
       end
     end
+    resources :polls
   end
   get 'home', to: 'pages#home'
   get 'about', to: 'pages#about'
 
-  resources :polls
+  resources :polls, only: [:show] do
+    member do
+      post :vote
+    end
+  end
 
   root 'pages#home'
 end

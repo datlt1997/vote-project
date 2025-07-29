@@ -1,54 +1,53 @@
-class PollsController < AdminController
-  before_action :set_poll, only: %i[ edit update destroy ]
+class PollsController < ApplicationController
+  layout 'nologin_application'
+  before_action :set_poll, only: [:show, :vote]
+  before_action :require_login_if_needed, only: [:vote]
+  before_action :store_user_location!, if: :storable_location?
 
-  DEFAULT_PAGE_SIZE = 5
+  def show
+  end
 
-  def index
-    @polls = Poll
-      .yield_self do |relation|
-        params[:title].present? ? relation.where("title LIKE ?", "%#{params[:title]}%") : relation
+  def vote
+    if @poll.allows_multiple
+      option_ids = params[:option_ids]&.reject(&:blank?) || []
+
+      if option_ids.empty?
+        redirect_to @poll, alert: "Vui lòng chọn ít nhất một lựa chọn." and return
       end
-      .page(params[:page])
-      .per(DEFAULT_PAGE_SIZE)
-      .includes(:options)
-  end
 
-  def new
-    @poll = Poll.new
-    @poll.options.build
-  end
+      option_ids.each do |oid|
+        option = @poll.options.find_by(id: oid)
+        next unless option
 
-  def create
-    @poll = Poll.new(poll_params)
-    @poll.user_id = 1
-
-    respond_to do |format|
-      if @poll.save
-        format.html { redirect_to polls_path, notice: "Success." }
-      else
-        format.html { render :new, status: :unprocessable_entity }
+        @poll.votes.create!(
+          option: option,
+          user_id: @poll.anonymous ? nil : current_user&.id
+        )
       end
-    end
-  end
-    
-  def edit
-  end
-
-  def update
-    if @poll.update(poll_params)
-      redirect_to polls_path, notice: "Success."
     else
-      render :edit, status: :unprocessable_entity
+      option = @poll.options.find_by(id: params[:option_id])
+      unless option
+        redirect_to @poll, alert: "Vui lòng chọn một lựa chọn." and return
+      end
+
+      @poll.votes.create!(
+        option: option,
+        user_id: @poll.anonymous ? nil : current_user&.id
+      )
     end
+
+    redirect_to home_path, notice: "Bình chọn thành công!"
   end
 
-  def destroy
-    @poll.destroy!
+  def storable_location?
+    request.get? && 
+      is_navigational_format? && 
+      !devise_controller? && 
+      !request.xhr?
+  end
 
-    respond_to do |format|
-      format.html { redirect_to polls_path, notice: "Success." }
-      format.json { head :no_content }
-    end
+  def store_user_location!
+    store_location_for(:user, request.fullpath)
   end
 
   private
@@ -57,20 +56,11 @@ class PollsController < AdminController
     @poll = Poll.find(params[:id])
   end
 
+  def require_login_if_needed
+    redirect_to new_user_session_path unless @poll.anonymous || user_signed_in?
+  end
+
   def poll_params
-    permitted = params.require(:poll).permit(
-      :title,
-      :description,
-      :allows_multiple,
-      :anonymous,
-      :image,
-      options_attributes: [:id, :content, :_destroy]
-    )
-
-    if permitted[:image].blank?
-      permitted.delete(:image)
-    end
-
-    permitted
+    params.require(:poll).permit(:title, :description, :anonymous, options_attributes: [:title])
   end
 end

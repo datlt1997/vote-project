@@ -1,0 +1,46 @@
+<div class="container my-5">
+  <div class="card shadow-sm">
+    <div class="card-body">
+
+      <h1 class="card-title h3"><%= @poll.title %></h1>
+      <p class="card-text text-muted"><%= @poll.description %></p>
+
+      <% if @poll.image.attached? %>
+        <div class="mb-4 text-center">
+          <%= image_tag @poll.image, class: "img-fluid rounded shadow", style: "max-height: 300px;" %>
+        </div>
+      <% end %>
+
+      <%= form_with url: vote_poll_path(@poll), method: :post, local: true do %>
+        <div class="mb-3">
+          <% @poll.options.each do |option| %>
+            <div class="form-check">
+              <% if @poll.allows_multiple %>
+                <%= check_box_tag 'option_ids[]', option.id, false, class: 'form-check-input', id: "option_#{option.id}" %>
+              <% else %>
+                <%= radio_button_tag 'option_id', option.id, false, class: 'form-check-input', id: "option_#{option.id}" %>
+              <% end %>
+              <%= label_tag "option_#{option.id}", option.content, class: 'form-check-label' %>
+            </div>
+          <% end %>
+        </div>
+
+        <%= submit_tag "Bình chọn", class: "btn btn-primary mt-2" %>
+      <% end %>
+
+      <hr class="my-4" />
+
+      <% if @poll.anonymous %>
+        <p class="text-success">
+          <i class="bi bi-shield-lock"></i> Bình chọn <strong>ẩn danh</strong> được cho phép.
+        </p>
+      <% else %>
+        <% unless user_signed_in? %>
+          <div class="alert alert-warning" role="alert">
+            Bạn cần <%= link_to "đăng nhập", new_user_session_path, class: "alert-link" %> để tham gia bình chọn.
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -5,7 +5,7 @@
   <div class="card-body">
     <div class="row justify-content-end mb-2">
       <div class="col-md-6">
-        <%= form_with url: polls_path, method: :get, class: "d-flex" do |form| %>
+        <%= form_with url: admin_polls_path, method: :get, class: "d-flex" do |form| %>
           <div class="input-group">
             <%= form.text_field :title, value: params[:title], class: 'form-control shadow-none', placeholder: 'Search', aria: { label: 'Search' } %>
             <button class="btn btn-primary px-4" type="submit">
@@ -17,7 +17,7 @@
     </div>
 
     <div class="d-flex flex-row-reverse">
-      <%= link_to "Create", new_poll_path(), class: "p-1 btn btn-primary" %>
+      <%= link_to "Create", new_admin_poll_path(), class: "p-1 btn btn-primary" %>
     </div>
 
     <div class='table-responsive'>
@@ -46,11 +46,11 @@
               <td><%= poll.options.count %></td>
               <td>
                 <div class="d-flex flex-wrap gap-2">
-                  <%= link_to edit_poll_path(poll), class: "btn btn-primary btn-sm" do %>
+                  <%= link_to edit_admin_poll_path(poll), class: "btn btn-primary btn-sm" do %>
                     <%= icon('fa', 'pen')%>
                   <% end %>
 
-                  <%= button_to poll_path(poll), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" do %>
+                  <%= button_to admin_poll_path(poll), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" do %>
                     <%= icon('fa', 'trash')%>
                   <% end %>
                 </div>
