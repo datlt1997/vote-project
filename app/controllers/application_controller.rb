@@ -15,8 +15,12 @@ class ApplicationController < ActionController::Base
          Rails.logger.debug "PARAMS: #{resource.admin?}"
         if resource.admin?
             admin_users_path
-        else
+        elsif resource.user?
             stored_location_for(resource) || home_path
+        else
+            Rails.logger.debug "123"
+            home_path
         end
     end
+
 end
