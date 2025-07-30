@@ -5,6 +5,7 @@ WORKDIR /var/www
 RUN apt-get update && \
     apt-get install -y \
     build-essential \
+    cron \
     nodejs && \
     rm -rf /var/lib/apt/lists/*
 

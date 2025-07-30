@@ -10,8 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_08_080747) do
-  create_table "active_storage_attachments", charset: "utf8", force: :cascade do |t|
+ActiveRecord::Schema[7.1].define(version: 2025_07_30_032632) do
+  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_08_080747) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", charset: "utf8", force: :cascade do |t|
+  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -33,13 +33,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_08_080747) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", charset: "utf8", force: :cascade do |t|
+  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "notifications", charset: "utf8", force: :cascade do |t|
+  create_table "notifications", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "message"
     t.bigint "user_id", null: false
     t.boolean "is_read"
@@ -48,7 +48,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_08_080747) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
-  create_table "options", charset: "utf8", force: :cascade do |t|
+  create_table "options", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "content"
     t.bigint "poll_id", null: false
     t.datetime "created_at", null: false
@@ -56,7 +56,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_08_080747) do
     t.index ["poll_id"], name: "index_options_on_poll_id"
   end
 
-  create_table "poll_views", charset: "utf8", force: :cascade do |t|
+  create_table "poll_views", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "poll_id", null: false
     t.datetime "viewed_at"
@@ -66,7 +66,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_08_080747) do
     t.index ["user_id"], name: "index_poll_views_on_user_id"
   end
 
-  create_table "polls", charset: "utf8", force: :cascade do |t|
+  create_table "polls", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "title", null: false
     t.text "description"
     t.datetime "expires_at"
@@ -76,11 +76,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_08_080747) do
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "ended_email_sent"
     t.index ["user_id"], name: "index_polls_on_user_id"
   end
 
-  create_table "users", charset: "utf8", force: :cascade do |t|
-    t.integer "role", default: 0
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.integer "role"
     t.string "user_name", null: false
     t.string "avatar"
     t.datetime "created_at", null: false
@@ -94,7 +95,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_08_080747) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "votes", charset: "utf8", force: :cascade do |t|
+  create_table "votes", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "option_id", null: false
     t.bigint "poll_id"

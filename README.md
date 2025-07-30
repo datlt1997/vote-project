@@ -51,6 +51,14 @@
   rails db:seed
   ```
 
+## 3. Cài đặt chạy cron để gửi mail khi kết thúc bình chọn
+```sh
+  docker compose build web
+  docker exec -it ruby_vote service cron start
+  docker exec -it ruby_vote rails db:migrate
+  docker exec -it ruby_vote whenever --update-crontab --set environment=development #nếu production thì set lại environment tương ứng
+  ```
+
 ## 4. Tài liệu tham khảo
 
 ### Document

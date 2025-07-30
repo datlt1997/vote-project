@@ -31,6 +31,14 @@ services:
             - ./mysql/sql:/docker-entrypoint-initdb.d
         networks:
             - app-networks
+    mailcatcher:
+        container_name: ${PROJECT_NAME:-basic}_mailcatcher
+        image: schickling/mailcatcher
+        ports:
+            - ${MAILCATCHER_PORT_EXTRA:-1089}:${MAILCATCHER_PORT_INBOUND:-1080}
+            - ${MAILCATCHER_SMTP_PORT_EXTRA:-10250}:${MAILCATCHER_SMTP_PORT_INBOUND:-1025}
+        networks:
+            - app-networks
 #    phpmyadmin:
 #        image: phpmyadmin/phpmyadmin
 #        container_name: ruby_phpmyadmin
