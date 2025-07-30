@@ -18,6 +18,11 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+
+env :PATH, ENV['PATH']
+env :GEM_PATH, ENV['GEM_PATH']
+env :BUNDLE_PATH, ENV['BUNDLE_PATH']
+
 every 1.minute do
-  runner "Poll.check_and_send_ended_emails"
+  command "cd /var/www && bundle exec rails runner -e development 'Poll.check_and_send_ended_emails' >> log/poll_dev_cron.log 2>&1"
 end
