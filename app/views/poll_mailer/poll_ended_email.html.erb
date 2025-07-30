@@ -1,0 +1,7 @@
+<h2>Bình chọn "<%= @poll.title %>" đã kết thúc!</h2>
+
+<p>Cảm ơn bạn <%= @user.email %> đã tham gia bình chọn.</p>
+
+<% @poll.options.each do |option| %>
+  <p><strong><%= option.content %></strong>: <%= option.votes.count %> lượt bình chọn</p>
+<% end %>
