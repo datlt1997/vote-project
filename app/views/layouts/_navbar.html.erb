@@ -16,7 +16,7 @@
             <li><a class="dropdown-item" href="#">Cài Đặt</a></li>
             <li><hr class="dropdown-divider"></li>
             <li>
-              <%= link_to "Đăng xuất", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+            <%= button_to "Đăng xuất", destroy_user_session_path, method: :delete, class: "dropdown-item", form: { style: "display: inline;" } %>
             </li>
           </ul>
         </li>
