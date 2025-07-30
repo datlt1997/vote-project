@@ -50,6 +50,10 @@
                     <%= icon('fa', 'pen')%>
                   <% end %>
 
+                  <%= link_to analytic_admin_poll_path(poll), class: "btn btn-info btn-sm" do %>
+                    <%= icon('fa', 'signal')%>
+                  <% end %>
+
                   <%= button_to admin_poll_path(poll), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" do %>
                     <%= icon('fa', 'trash')%>
                   <% end %>
