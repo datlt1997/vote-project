@@ -44,6 +44,11 @@
         <%= form.file_field :image, class: 'form-control' %>
       </div>
 
+      <div class="mb-3 form-group">
+        <%= form.label :expires_at, class: 'form-label' %>
+        <%= form.datetime_field :expires_at, class: 'form-control' %>
+      </div>
+
       <h6>Options</h6>
 
       <div id="options">

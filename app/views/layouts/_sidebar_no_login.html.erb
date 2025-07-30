@@ -1,0 +1,5 @@
+<%= link_to root_path, class: "sidebar-no_login" do %>
+  <%= image_tag "/images/logo.png", alt: "Vote Project", height: 150, class: "sidebar-image" %>
+<% end %>
+<p class="description-project">Vote Project là nền tảng bỏ phiếu trực tuyến giúp tổ chức các cuộc khảo sát, bầu chọn nhanh chóng và minh bạch. Với giao diện thân thiện, bảo mật cao và dễ sử dụng trên mọi thiết bị, Vote Project phù hợp cho doanh nghiệp, trường học và cộng đồng. Tạo phiếu bầu linh hoạt, theo dõi kết quả thời gian thực – mọi quyết định đều trở nên dễ dàng hơn.</p>
+<%= button_to "Đăng nhập", new_user_session_path, method: :get, form: { class: "sidebar-login-form" }, class: "btn btn-primary btn-login-no-auth" %>

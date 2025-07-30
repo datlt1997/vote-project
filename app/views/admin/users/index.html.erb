@@ -7,14 +7,11 @@
         <%= link_to "Thêm mới", new_admin_user_path(), class: "btn btn-primary" %>
         <div class="csv-wrapper">
           <%= link_to 'Export CSV', admin_users_path(format: :csv), class: "btn btn-primary" %>
-          <%= form_with url: import_admin_users_path, method: :post, local: true, html: { multipart: true } do |f| %>
-            <div class="form-group">
-              <%= f.file_field :file, class: "form-control d-none", id: "csv-file-input" %>
-              <button type="button" class="btn btn-secondary" id="trigger-file-upload">
-                Chọn file
-              </button>
-            </div>
-            <%= f.submit "Import CSV", class: "btn btn-primary" %>
+          <%= form_with url: import_admin_users_path, method: :post, local: true, html: { multipart: true, id: "import-form" } do |f| %>
+            <%= f.file_field :file, class: "d-none", id: "csv-file-input" %>
+            <button type="button" class="btn btn-primary" id="import-btn">
+              Import CSV
+            </button>
           <% end %>
         </div>
         <table class="table">

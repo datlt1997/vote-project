@@ -17,19 +17,8 @@
     <main>
       <div class="page">
         <%= render 'layouts/navbar'%>
+        
         <div class="page-body container">
-        <% if notice %>
-          <div class="alert alert-success">
-            <%= notice %>
-          </div>
-        <% end %>
-
-        <% if alert %>
-          <div class="alert alert-danger">
-            <%= alert %>
-            
-          </div>
-        <% end %>
           <div class="row">
             <% if current_user.admin? %>
               <div class="sidebar col-3">
@@ -46,5 +35,6 @@
       </div>
     </main>
     
+    <%= render 'layouts/toast'%>
 </body>
 </html>

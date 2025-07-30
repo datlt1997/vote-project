@@ -91,6 +91,7 @@ module Admin
         :allows_multiple,
         :anonymous,
         :image,
+        :expires_at,
         options_attributes: [:id, :content, :_destroy]
       )
 
@@ -104,8 +105,8 @@ module Admin
     def format_vote_data(option)
       option.votes.map do |vote|
         {
-          id: vote.user.id,
-          user_name: vote.user.user_name,
+          id: vote.user.present? ? vote.user.id : nil,
+          user_name: vote.user.present? ? vote.user.user_name : 'ẩn danh',
           option_content: option.content,
           voted_at: vote.created_at
         }

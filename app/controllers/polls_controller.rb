@@ -1,5 +1,5 @@
 class PollsController < ApplicationController
-  layout 'nologin_application'
+  layout :choose_layout
   before_action :set_poll, only: [:show, :vote]
   before_action :require_login_if_needed, only: [:vote]
   before_action :store_user_location!, if: :storable_location?
@@ -62,5 +62,9 @@ class PollsController < ApplicationController
 
   def poll_params
     params.require(:poll).permit(:title, :description, :anonymous, options_attributes: [:title])
+  end
+  
+  def choose_layout
+    user_signed_in? ? "application" : "nologin_application"
   end
 end

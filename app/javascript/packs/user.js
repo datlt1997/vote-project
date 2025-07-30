@@ -1,23 +1,18 @@
 document.addEventListener('turbo:load', function () {
   // 📁 Import CSV file
   const fileInput = document.getElementById('csv-file-input');
-  const triggerButton = document.getElementById('trigger-file-upload');
-  const form = document.getElementById('import-form');
+  const importBtn = document.getElementById("import-btn");
 
-  if (fileInput && triggerButton && form) {
-    triggerButton.addEventListener('click', function () {
-      fileInput.click();
-    });
+  importBtn.addEventListener("click", function () {
+    fileInput.click();
+  });
 
-    fileInput.addEventListener('change', function () {
-      if (fileInput.files.length > 0) {
-        triggerButton.classList.remove('btn-secondary');
-        triggerButton.classList.add('btn-success');
-        triggerButton.textContent = "File: " + fileInput.files[0].name;
-        form.submit();
-      }
-    });
-  }
+  fileInput.addEventListener("change", function () {
+    if (fileInput.files.length > 0) {
+      document.getElementById("import-form").submit();
+    }
+  });
+  
 
   // 📷 Upload Avatar file
   const fileAvatarInput = document.getElementById('avatar-file');

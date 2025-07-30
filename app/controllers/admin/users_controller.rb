@@ -77,6 +77,11 @@ module Admin
       if permitted[:password].blank?
         permitted.delete(:password)
       end
+      
+      if permitted[:avatar].blank?
+        permitted.delete(:avatar)
+      end
+      
       permitted
     end
 

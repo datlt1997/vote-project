@@ -23,5 +23,7 @@ module Blog
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.time_zone = 'Asia/Ho_Chi_Minh'
   end
 end

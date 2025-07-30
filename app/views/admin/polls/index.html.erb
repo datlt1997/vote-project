@@ -28,6 +28,7 @@
             <th scope="col">Title</th>
             <th scope="col">Description</th>
             <th scope="col">Image</th>
+            <th scope="col">Expires At</th>
             <th scope="col">Options</th>
             <th scope="col">Action</th>
           </tr>
@@ -43,6 +44,7 @@
                   <%= image_tag poll.image.variant(resize_to_limit: [100, 100]) %>
                 <% end %>
               </td>
+              <td><%= poll.expires_at&.strftime("%Y-%m-%d %H:%M:%S") %></td>
               <td><%= poll.options.count %></td>
               <td>
                 <div class="d-flex flex-wrap gap-2">
