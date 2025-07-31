@@ -7,4 +7,16 @@ module ApplicationHelper
     def poll_expired?(poll)
         poll.expires_at.present? && poll.expires_at < Time.current
     end
+
+    def show_sidebar
+        [
+            home_path,
+            root_path,
+        ]
+    end
+
+    def current_show_sidebar?
+        puts "Checking poll: 1111"
+         show_sidebar.any? { |path| current_page?(path) }
+    end
 end

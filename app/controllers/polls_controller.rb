@@ -47,7 +47,7 @@ class PollsController < ApplicationController
       )
     end
 
-    redirect_to home_path, notice: "Bình chọn thành công!"
+    redirect_to polls_path, notice: "Bình chọn thành công!"
   end
 
   def storable_location?
