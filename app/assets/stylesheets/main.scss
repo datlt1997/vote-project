@@ -52,7 +52,6 @@ body {
 }
 
 .description-project {
-    padding: 0 20px;
     font-size: 18px;
 }
 
@@ -61,4 +60,18 @@ body {
     text-align: center;
     display: flex;
     justify-content: space-evenly;
+}
+
+.card-home {
+    background-color: unset;
+    max-width: 440px;
+}
+
+.margin-top-50 {
+    margin-top: 50px;
+}
+
+.btn-poll-user {
+    width: 120px;
+    margin: 10px auto;
 }

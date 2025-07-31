@@ -1,6 +1,7 @@
+<% content_for :title, "Đăng Ký" %>
 <div class="col-md-auto">
-  <div class="row justify-content-center mt-5">
-    <div class="col-md-4">
+  <div class="row justify-content-center margin-top-50">
+    <div class="col-md-4 card p-3">
       <h2 class="text-center">Đăng Ký</h2>
       <hr>
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
@@ -29,9 +30,9 @@
           <%= f.password_field :password_confirmation, autofocus: true, class: "form-control", id: "password-confirmation-input" %>
         </div>
 
-        <div class="actions mb-3 justify-content-center flex-column d-flex">
+        <div class="actions mb-3 justify-content-center flex-column align-items-center d-flex">
           <%= f.submit "Đăng Ký", class: "btn btn-primary container-fuild" %>
-          <div class="mb-3 justify-content-center d-flex">
+          <div class="mt-2 justify-content-center d-flex">
             <%= render "devise/shared/links" %>
           </div>
         </div>

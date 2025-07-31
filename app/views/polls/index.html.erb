@@ -1,7 +1,13 @@
 <div class="container">
   <% content_for :title, "Danh sách bình chọn" %>
-  <div class="card p-3">
-    <h1>My poll page</h1>
+  <div class="card d-flex flex-row justify-content-between p-3">
+    <h3>Danh sách bình chọn</h3>
+    <div class=button-header>
+      <%= link_to "Trang chủ", root_path, class: "btn btn-secondary"%>
+      <% unless user_signed_in? %>
+        <%= link_to "Đăng nhập", new_user_session_path, class: "btn btn-primary" %>
+      <% end %>
+    </div>
   </div>
 
   <div class="row mt-3">
@@ -9,7 +15,7 @@
     <div class="col-12 col-sm-6 col-md-3 mb-4">
       <div class="card" style="width: 100%;">
         <% if !poll.anonymous && !current_user %>
-          <div class="position-absolute top-0 end-0 m-1 bg-dark bg-opacity-75 text-white rounded-circle p-1" title="Yêu cầu đăng nhập để bình chọn" style='width: 30px; height: 30px; display: flex; justify-content: center;'>
+          <div class="position-absolute top-0 end-0 m-1 bg-dark bg-opacity-75 text-white rounded-circle align-items-center" title="Yêu cầu đăng nhập để bình chọn" style='width: 30px; height: 30px; display: flex; justify-content: center;'>
             <i class="bi bi-lock-fill"></i>
           </div>
         <% end %>

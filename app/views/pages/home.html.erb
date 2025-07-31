@@ -1,10 +1,14 @@
-
-<div class="container">
-  <div class="card p-3">
-  <h1>My home page</h1>
-
-  <%= link_to "About Me", about_path %>
-  <%= link_to "Polls", polls_path %>
+<% content_for :title, "Trang chủ" %>
+<div class="d-flex justify-content-center margin-top-50">
+  <div class="card card-home p-3">
+    <%= link_to root_path, class: "sidebar-no_login" do %>
+      <%= image_tag "/images/logo.png", alt: "Vote Project", height: 150, class: "sidebar-image" %>
+    <% end %>
+    <p class="description-project mt-2">Bỏ phiếu mà cũng chill? Có chứ! Với Vote Project, bạn chỉ cần vài cú click là xong. Giao diện xịn xò, vote mượt trên mọi thiết bị, từ sếp đến sinh viên, từ crush đến bà ngoại đều vote được. Kết quả rõ ràng, minh bạch từ đầu đến cuối – bầu chọn chưa bao giờ vừa dễ lại vừa vui đến thế!</p>
+    <% unless user_signed_in? %>
+      <%= link_to "Đăng nhập", new_user_session_path, class: "btn btn-primary btn-poll-user" %>
+    <% end %>
+    <%= link_to "Bình chọn", polls_path, class: "btn btn-primary btn-poll-user" %>
   </div>
 </div>
 

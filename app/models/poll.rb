@@ -13,14 +13,13 @@ class Poll < ApplicationRecord
 
   def self.check_and_send_ended_emails
     ended_polls = where("expires_at IS NOT NULL AND expires_at <= ? AND (ended_email_sent = ? or ended_email_sent IS NULL)", Time.current, false)
-    puts "Checking poll: #{poll.title}"
+    
     ended_polls.find_each do |poll|
       # Gửi email đến tất cả người đã vote
       users = poll.options.includes(votes: :user).flat_map { |opt| opt.votes.map(&:user) }.uniq
 
       users.each do |user|
         if user
-          puts "Sending mail to: #{user.email}"
           PollMailer.poll_ended_email(poll, user).deliver_now
         end
       end
