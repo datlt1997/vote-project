@@ -1,6 +1,6 @@
 /mysql
 /tmp
-/log/development.log
+/log/*.log
 .idea
 /storage/*/*
 /public/assets

@@ -16,7 +16,7 @@ module Admin
     end
 
     def custom_authenticate_user!
-      if !user_signed_in? || current_user.role == 1
+      if !user_signed_in? || current_user.admin?
         authenticate_user!
       end
     end

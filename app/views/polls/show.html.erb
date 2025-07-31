@@ -1,4 +1,14 @@
 <div class="container my-5">
+  <% content_for :title, "Chi tiết bình chọn" %>
+  <div class="card d-flex flex-row justify-content-between p-3 mb-3">
+    <h3>Chi tiết bình chọn</h3>
+    <div class=button-header>
+      <%= link_to "Quay lại", polls_path, class: "btn btn-secondary"%>
+      <% unless user_signed_in? %>
+        <%= link_to "Đăng nhập", new_user_session_path, class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
   <div class="card shadow-sm">
     <div class="card-body">
 
@@ -10,6 +20,7 @@
           <%= image_tag @poll.image, class: "img-fluid rounded shadow", style: "max-height: 300px;" %>
         </div>
       <% end %>
+      <% can_vote = @poll.anonymous || user_signed_in? %>
 
       <%= form_with url: vote_poll_path(@poll), method: :post, local: true do %>
         <div class="mb-3">
@@ -25,22 +36,19 @@
           <% end %>
         </div>
 
-        <%= submit_tag "Bình chọn", class: "btn btn-primary mt-2" %>
+        
+
+      <%= submit_tag "Bình chọn", class: "btn btn-primary mt-2", disabled: !can_vote %>
+
       <% end %>
 
       <hr class="my-4" />
 
-      <% if @poll.anonymous %>
-        <p class="text-success">
-          <i class="bi bi-shield-lock"></i> Bình chọn <strong>ẩn danh</strong> được cho phép.
-        </p>
-      <% else %>
-        <% unless user_signed_in? %>
+      <% unless can_vote %>
           <div class="alert alert-warning" role="alert">
-            Bạn cần <%= link_to "đăng nhập", new_user_session_path, class: "alert-link" %> để tham gia bình chọn.
+            Bạn cần đăng nhập để tham gia bình chọn.
           </div>
         <% end %>
-      <% end %>
     </div>
   </div>
 </div>
