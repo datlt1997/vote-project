@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get 'home', to: 'pages#home'
   get 'about', to: 'pages#about'
 
-  resources :polls, only: [:show] do
+  resources :polls, only: [:index, :show] do
     member do
       post :vote
     end
