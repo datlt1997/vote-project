@@ -4,7 +4,18 @@ class PollsController < ApplicationController
   before_action :require_login_if_needed, only: [:vote]
   before_action :store_user_location!, if: :storable_location?
 
+  def index
+    @polls = Poll.includes(:options)
+  end
+
   def show
+    if poll_expired?(@poll)
+      redirect_to polls_path, alert: "Bình chọn này đã hết hạn."
+      return
+    end
+    if user_voted?(@poll, current_user)
+      redirect_to polls_path, alert: "Bạn đã bình chọn rồi."
+    end
   end
 
   def vote
@@ -21,7 +32,7 @@ class PollsController < ApplicationController
 
         @poll.votes.create!(
           option: option,
-          user_id: @poll.anonymous ? nil : current_user&.id
+          user_id: current_user&.id ? current_user&.id : nil
         )
       end
     else
@@ -32,7 +43,7 @@ class PollsController < ApplicationController
 
       @poll.votes.create!(
         option: option,
-        user_id: @poll.anonymous ? nil : current_user&.id
+        user_id: current_user&.id ? current_user&.id : nil
       )
     end
 
@@ -62,6 +73,14 @@ class PollsController < ApplicationController
 
   def poll_params
     params.require(:poll).permit(:title, :description, :anonymous, options_attributes: [:title])
+  end
+
+  def user_voted?(poll, user)
+    user && Vote.exists?(poll_id: poll.id, user_id: user.id)
+  end
+
+  def poll_expired?(poll)
+    poll.expires_at.present? && poll.expires_at < Time.current
   end
   
   def choose_layout
