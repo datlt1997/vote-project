@@ -6,7 +6,7 @@
   <ul class="nav nav-pills flex-column mb-auto">
     <% admin_menu_items.each do |item| %>
       <li class="nav-item">
-        <%= link_to item["path"], class: "nav-link #{'active' if request.path == item['path']}" do %>
+        <%= link_to item["path"], class: "nav-link #{'active' if request.path.start_with?(item['path'])}" do %>
           <%= item["name"] %>
         <% end %>
       </li>

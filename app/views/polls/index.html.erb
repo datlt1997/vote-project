@@ -20,9 +20,10 @@
           </div>
         <% end %>
         <% if poll.expires_at.present? %>
-          <div class="position-absolute top-0 start-0 bg-dark text-white px-2 py-1 small rounded-end" 
+          <div class="position-absolute top-0 start-0 bg-dark text-white px-2 py-1 small rounded-end"
+              data-controller="poll--countdown"
               data-expires-at="<%= poll.expires_at.utc.iso8601 %>">
-            <span class="countdown-timer">Đang tải...</span>
+            <span class="countdown-timer" data-poll--countdown-target="display">Đang tải...</span>
           </div>
         <% end %>
         <% if poll.persisted? && poll.image.attached? %>
@@ -60,34 +61,3 @@
     <% end %>
   </div>
 </div>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const timers = document.querySelectorAll("[data-expires-at]");
-
-    timers.forEach(timer => {
-      const span = timer.querySelector(".countdown-timer");
-      const endTime = new Date(timer.dataset.expiresAt);
-
-      const updateCountdown = () => {
-        const now = new Date();
-        const diff = endTime - now;
-
-        if (diff <= 0) {
-          span.textContent = "Đã hết hạn";
-          return;
-        }
-
-        const hours = Math.floor(diff / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        span.textContent = `${hours}h ${minutes}m ${seconds}s`;
-      };
-
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
-    });
-  });
-</script>
-

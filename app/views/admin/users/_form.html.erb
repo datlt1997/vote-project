@@ -38,12 +38,13 @@
           <%= image_tag(user.avatar, size: "100x70") if user.avatar.present? %>
           </div>
         <% end %>
+        <div data-controller="user--image">
+          <%= form.file_field :avatar, class: 'form-control d-none', id: 'avatar-file', data: { "user--image-target": "fileInput" } %>
 
-        <%= form.file_field :avatar, class: 'form-control d-none', id: 'avatar-file' %>
-
-        <button type="button" class="btn btn-secondary d-block" id="upload-avatar-btn">
-          Tải ảnh
-        </button>
+          <button type="button" class="btn btn-secondary d-block" id="upload-avatar-btn" data-action="click->user--image#triggerFileDialog">
+            Tải ảnh
+          </button>
+        </div>
 
       </div>
 
@@ -55,5 +56,3 @@
     <% end %>
   </div>
 </div>
-
-<%= javascript_include_tag "packs/user", "data-turbo-track": "reload", defer: true %>
