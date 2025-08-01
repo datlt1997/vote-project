@@ -7,12 +7,14 @@
         <%= link_to "Thêm mới", new_admin_user_path(), class: "btn btn-primary" %>
         <div class="csv-wrapper">
           <%= link_to 'Export CSV', admin_users_path(format: :csv), class: "btn btn-primary" %>
-          <%= form_with url: import_admin_users_path, method: :post, local: true, html: { multipart: true, id: "import-form" } do |f| %>
-            <%= f.file_field :file, class: "d-none", id: "csv-file-input" %>
-            <button type="button" class="btn btn-primary" id="import-btn">
-              Import CSV
-            </button>
-          <% end %>
+          <div data-controller="user--import">
+            <%= form_with url: import_admin_users_path, method: :post, local: true, data: { "user--import-target": "form" }, html: { multipart: true, id: "import-form" } do |f| %>
+              <%= f.file_field :file, class: "d-none", id: "csv-file-input", data: { "user--import-target": "fileInput", action: "change->user--import#submitForm" } %>
+              <button type="button" class="btn btn-primary" id="import-btn" data-action="click->user--import#triggerFileSelect">
+                Import CSV
+              </button>
+            <% end %>
+          </div>
         </div>
         <table class="table">
             <thead>
@@ -47,5 +49,3 @@
           <%= paginate @users, params: request.query_parameters, param_name: :page, url: admin_users_path %>
       </div>
     </div>
-
-<%= javascript_include_tag "packs/user", "data-turbo-track": "reload", defer: true %>

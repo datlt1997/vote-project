@@ -46,26 +46,27 @@
 
       <div class="mb-3 form-group">
         <%= form.label :expires_at, class: 'form-label' %>
-        <%= form.datetime_field :expires_at, class: 'form-control' %>
+        <%= form.datetime_local_field  :expires_at, class: 'form-control' %>
       </div>
 
       <h6>Options</h6>
-
-      <div id="options">
-        <%= form.fields_for :options do |option_form| %>
-          <div class="nested-fields mb-2">
-            <%= option_form.hidden_field :_destroy %>
-            <div class="input-group">
-              <%= option_form.text_field :content, class: 'form-control', placeholder: 'Option content' %>
-              <div class="input-group-append">
-                <button class="btn position-absolute end-0 remove_fields" type="button"><%= icon('fa', 'trash')%></button>
+      <div data-controller="poll--option">
+        <div id="options" data-poll--option-target="container">
+          <%= form.fields_for :options do |option_form| %>
+              <div class="nested-fields mb-2" >
+                <%= option_form.hidden_field :_destroy %>
+                <div class="input-group">
+                  <%= option_form.text_field :content, class: 'form-control', placeholder: 'Thêm lựa chọn' %>
+                  <div class="input-group-append">
+                    <button class="btn position-absolute end-0 remove_fields" type="button" data-action="click->poll-option#remove"><%= icon('fa', 'trash')%></button>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
+          <% end %>
+        </div>
 
-      <button type="button" class="btn btn-success" id="add-option-btn"><%= icon('fa', 'plus')%></button>
+        <button type="button" class="btn btn-success" id="add-option-btn" data-action="click->poll--option#add"><%= icon('fa', 'plus')%></button>
+      </div>
       
       <br><br>
 
@@ -76,4 +77,3 @@
   </div>
 </div>
 
-<%= javascript_include_tag "packs/polls" %>
