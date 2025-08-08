@@ -36,6 +36,9 @@ module Admin
     end
 
     def update
+      if params[:poll][:remove_image] == "true"
+        @poll.image.purge if @poll.image.attached?
+      end
       if @poll.update(poll_params)
         redirect_to admin_polls_path, notice: "Success."
       else

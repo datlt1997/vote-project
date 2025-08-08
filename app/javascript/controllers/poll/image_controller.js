@@ -6,11 +6,8 @@ export default class extends Controller {
     initialUrl: String
   }
 
-  connect() {
-    // No-op for now
-  }
-
   triggerFileDialog() {
+    console.log(12);
     this.fileInputTarget.click()
   }
 
@@ -30,11 +27,14 @@ export default class extends Controller {
   removeImage() {
     // Clear file input
     this.fileInputTarget.value = ""
+
+    // Hide preview
     this.previewTarget.src = ""
     this.previewTarget.hidden = true
     this.removeBtnTarget.hidden = true
 
-    const flagInput = document.getElementById("remove-avatar-flag")
+    // Set hidden flag
+    const flagInput = document.getElementById("remove-image-flag")
     if (flagInput) {
       flagInput.value = "true"
     }
