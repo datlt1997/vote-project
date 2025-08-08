@@ -25,7 +25,7 @@
         <%= form.text_area :description, size: '50x10', class: 'form-control' %>
       </div>
 
-      <div class="mb-3 form-check">
+      <div class="mb-3 form-check d-none">
         <%= form.label :allows_multiple, class: 'form-check-label' %>
         <%= form.check_box :allows_multiple, class: 'form-check-input' %>
       </div>
@@ -35,15 +35,42 @@
         <%= form.check_box :anonymous, class: 'form-check-input' %>
       </div>
 
-      <% if @poll.persisted? && @poll.image.attached? %>
-        <%= image_tag @poll.image.variant(resize_to_limit: [300, 300]) %>
-      <% end %>
-
       <div class="mb-3 form-group">
         <%= form.label :image, class: 'form-label' %>
-        <%= form.file_field :image, class: 'form-control' %>
-      </div>
 
+        <div data-controller="poll--image"
+             data-poll--image-initial-url-value="<%= url_for(@poll.image) if @poll.image.attached? %>"
+             class="ms-2 my-3 position-relative input-image-form"
+             data-poll--image-target="container">
+
+          <img src="<%= url_for(@poll.image) if @poll.image.attached? %>"
+               id="poll-image-preview"
+               class="img-thumbnail mb-2"
+               style="max-width: 100px; max-height: 70px;"
+               data-poll--image-target="preview"
+               <%= "hidden" unless @poll.image.attached? %> >
+
+          <button type="button"
+                  class="btn-close position-absolute top-0 start-0 translate-middle translate-middle border border-1 rounded-circle"
+                  data-action="poll--image#removeImage"
+                  data-poll--image-target="removeBtn"
+                  style="z-index: 10;"
+                  <%= "hidden" unless @poll.image.attached? %>>
+          </button>
+          <%= form.hidden_field :remove_image, value: false, id: "remove-image-flag" %>
+
+          <%= form.file_field :image,
+                class: 'form-control d-none',
+                id: 'poll-image-file',
+                data: { "poll--image-target": "fileInput", action: "change->poll--image#preview" } %>
+
+          <button type="button"
+                  class="btn btn-secondary d-block"
+                  data-action="click->poll--image#triggerFileDialog">
+            Tải ảnh
+          </button>
+        </div>
+      </div>
       <div class="mb-3 form-group">
         <%= form.label :expires_at, class: 'form-label' %>
         <%= form.datetime_local_field  :expires_at, class: 'form-control' %>

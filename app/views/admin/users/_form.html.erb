@@ -14,7 +14,7 @@
       </div>
     <% end %>
 
-    <%= form_with(model: @user, url: user.new_record? ? admin_users_path : admin_user_path(user), local: true, html: { multipart: true }) do |form| %>
+    <%= form_with( model: [:admin, @user], local: true, html: { multipart: true }) do |form| %>
       <div class="mb-3 form-group">
         <%= form.label :email, class: 'form-label' %>
         <%= form.text_field :email, class: 'form-control' %>
@@ -33,23 +33,36 @@
       <div class="mb-3 form-group">
         <%= form.label :avatar, class: 'form-label' %>
 
-        <% if @user.persisted? && @user.avatar.attached? %>
-          <div class="mb-2">
-          <%= image_tag(user.avatar, size: "100x70") if user.avatar.present? %>
-          </div>
-        <% end %>
-        <div data-controller="user--image">
-          <%= form.file_field :avatar, class: 'form-control d-none', id: 'avatar-file', data: { "user--image-target": "fileInput" } %>
+        <div data-controller="user--image" data-user--image-initial-url-value="<%= avatar_url_for(@user) %>" class="ms-2 my-3 position-relative input-image-form" data-user--image-target="container">
+          <img src="<%= avatar_url_for(@user) %>"
+               id="avatar-preview"
+               class="img-thumbnail mb-2"
+               style="max-width: 100px; max-height: 70px;"
+               data-user--image-target="preview"
+               <%= "hidden"  unless ((@user.persisted? && @user.avatar.attached?) ||  @user.errors.any?) %> >
 
-          <button type="button" class="btn btn-secondary d-block" id="upload-avatar-btn" data-action="click->user--image#triggerFileDialog">
+          <%= form.hidden_field :remove_avatar, value: false, id: "remove-avatar-flag" %>
+
+          <button type="button"
+                  class="btn-close position-absolute top-0 start-0 translate-middle border border-1 rounded-circle"
+                  data-action="user--image#removeImage"
+                  data-user--image-target="removeBtn"
+                  style="z-index: 10;"
+                  <%= "hidden"  unless (@user.avatar.attached? || @user.errors.any? ) %>>
+          </button>
+          <%= form.file_field :avatar,
+                          class: 'form-control d-none',
+                          id: 'avatar-file',
+                          data: { "user--image-target": "fileInput", action: "change->user--image#preview" } %>
+
+          <button type="button"
+                  class="btn btn-secondary d-block"
+                  id="upload-avatar-btn"
+                  data-action="click->user--image#triggerFileDialog">
             Tải ảnh
           </button>
         </div>
-
       </div>
-
-      
-
       <div class='text-center'>
         <%= form.submit actionText, class: 'btn btn-primary' %>
       </div>

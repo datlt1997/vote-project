@@ -9,6 +9,14 @@ class User < ApplicationRecord
   before_validation :set_default_role, :set_default_username
 
   validates :user_name, presence: true, uniqueness: true, length: { minimum: 8 }
+  validates :email, presence: true,
+                      format: { with: URI::MailTo::EMAIL_REGEXP, message: "không đúng định dạng" },
+                      uniqueness: { case_sensitive: false },
+                      on: :create
+  validates :password, presence: true,
+                         length: { minimum: 6 },
+                         format: { with: /\A(?=.*[A-Za-z])(?=.*\d).*\z/, message: "phải bao gồm chữ và số" },
+                          if: :validate_password?
   def set_default_role
     self.role = ROLE_ADMIN if role.blank?
   end
@@ -19,4 +27,10 @@ class User < ApplicationRecord
   enum role: { user: 0, admin: 1 }
   scope :normal_users, -> { where(role: 0) }
   has_one_attached :avatar
+  attr_accessor :remove_avatar
+  private
+  def validate_password?
+      new_record? || password.present?
+  end
+
 end
