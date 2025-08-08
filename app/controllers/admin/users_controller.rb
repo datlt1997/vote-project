@@ -6,7 +6,7 @@ module Admin
     DEFAULT_PAGE_SIZE = 5
 
     def index
-      users = User.normal_users
+      users = User
       users = users.where("user_name LIKE ?", "%#{params[:key_work]}%") if params[:key_work].present?
 
       respond_to do |format|
@@ -32,6 +32,9 @@ module Admin
         if @user.save
           format.html { redirect_to admin_users_path, notice: "Tạo mới người dùng thành công." }
         else
+          if params[:user][:avatar]
+            @user.avatar.attach(params[:user][:avatar])
+          end
           format.html { render :new, status: :unprocessable_entity }
         end
       end
@@ -48,15 +51,22 @@ module Admin
       if @user.update(user_params)
         redirect_to admin_users_path, notice: "Cập nhật người dùng thành công."
       else
+        if params[:user][:avatar]
+          @user.avatar.attach(params[:user][:avatar])
+        end
         render :edit, status: :unprocessable_entity
       end
     end
 
     def destroy
-      @user.destroy!
-      respond_to do |format|
-      format.html { redirect_to admin_users_path, notice: "Xóa người dùng thành công." }
-      format.json { head :no_content }
+      if @user.admin?
+        redirect_to admin_users_path, alert: "Không thể xoá người dùng có quyền admin."
+      else
+        @user.destroy!
+        respond_to do |format|
+        format.html { redirect_to admin_users_path, notice: "Xóa người dùng thành công." }
+        format.json { head :no_content }
+      end
     end
     end
 

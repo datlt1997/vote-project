@@ -27,6 +27,9 @@ module Admin
         if @poll.save
           format.html { redirect_to admin_polls_path, notice: "Success." }
         else
+          if params[:poll][:image]
+            @poll.image.attach(params[:poll][:image])
+          end
           format.html { render :new, status: :unprocessable_entity }
         end
       end
@@ -42,6 +45,9 @@ module Admin
       if @poll.update(poll_params)
         redirect_to admin_polls_path, notice: "Success."
       else
+        if params[:poll][:image]
+          @poll.image.attach(params[:poll][:image])
+        end
         render :edit, status: :unprocessable_entity
       end
     end

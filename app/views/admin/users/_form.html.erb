@@ -14,7 +14,7 @@
       </div>
     <% end %>
 
-    <%= form_with(model: @user, url: user.new_record? ? admin_users_path : admin_user_path(user), local: true, html: { multipart: true }) do |form| %>
+    <%= form_with( model: [:admin, @user], local: true, html: { multipart: true }) do |form| %>
       <div class="mb-3 form-group">
         <%= form.label :email, class: 'form-label' %>
         <%= form.text_field :email, class: 'form-control' %>
@@ -33,13 +33,14 @@
       <div class="mb-3 form-group">
         <%= form.label :avatar, class: 'form-label' %>
 
-        <div data-controller="user--image" data-user--image-initial-url-value="<%= url_for(@user.avatar) if @user.avatar.attached? %>" class="ms-2 my-3 position-relative input-image-form" data-user--image-target="container">
-          <img src="<%= url_for(@user.avatar) if @user.avatar.attached? %>"
+        <div data-controller="user--image" data-user--image-initial-url-value="<%= avatar_url_for(@user) %>" class="ms-2 my-3 position-relative input-image-form" data-user--image-target="container">
+          <img src="<%= avatar_url_for(@user) %>"
                id="avatar-preview"
                class="img-thumbnail mb-2"
                style="max-width: 100px; max-height: 70px;"
                data-user--image-target="preview"
-               <%= "hidden" unless @user.avatar.attached? %> >
+               <%= "hidden"  unless ((@user.persisted? && @user.avatar.attached?) ||  @user.errors.any?) %> >
+
           <%= form.hidden_field :remove_avatar, value: false, id: "remove-avatar-flag" %>
 
           <button type="button"
@@ -47,7 +48,7 @@
                   data-action="user--image#removeImage"
                   data-user--image-target="removeBtn"
                   style="z-index: 10;"
-                  <%= "hidden" unless @user.avatar.attached? %>>
+                  <%= "hidden"  unless (@user.avatar.attached? || @user.errors.any? ) %>>
           </button>
           <%= form.file_field :avatar,
                           class: 'form-control d-none',
